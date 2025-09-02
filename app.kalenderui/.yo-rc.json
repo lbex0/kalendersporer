@@ -1,0 +1,16 @@
+{
+  "generator-ui5-project": {
+    "namespaceUI5": "app",
+    "projectName": "kalenderui",
+    "uimoduleName": "kalenderui",
+    "enableFPM": false,
+    "platform": "SAP Build Work Zone, standard edition",
+    "ui5Libs": "Local resources (SAPUI5)",
+    "newDir": true,
+    "initRepo": false,
+    "projectId": "app.kalenderui",
+    "uimodules": [
+      "kalenderui"
+    ]
+  }
+}

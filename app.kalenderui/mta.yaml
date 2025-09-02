@@ -1,0 +1,78 @@
+_schema-version: "3.2"
+ID: app.kalenderui
+version: 0.0.1
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
+        - npm run build:workspaces
+modules:
+  - name: app.kalenderui-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: app.kalenderui-auth
+      - name: app.kalenderui-html-repo-host
+      - name: app.kalenderui-destination-service
+        parameters:
+          content-target: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: app.kalenderui-html-repo-host
+              ServiceInstanceName: app.kalenderui-html-repo-host
+              ServiceKeyName: app.kalenderui-html-repo-host-key
+              sap.cloud.service: basic.service
+            - Name: app.kalenderui-auth
+              ServiceInstanceName: app.kalenderui-auth
+              ServiceKeyName: app.kalenderui-auth-key
+              sap.cloud.service: basic.service
+              Authentication: OAuth2UserTokenExchange
+    build-parameters:
+      no-source: true
+  - name: app.kalenderui-ui-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: app.kalenderui-html-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - dist/kalenderui-content.zip
+          name: kalenderui
+          target-path: resources/
+  - name: kalenderui
+    type: html5
+    path: kalenderui
+    build-parameters:
+      supported-platforms: []
+resources:
+  - name: app.kalenderui-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-name: app.kalenderui-destination-service
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        version: 0.0.1
+  - name: app.kalenderui-html-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+      service-keys:
+        - name: app.kalenderui-html-repo-host-key
+  - name: app.kalenderui-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+      service-keys:
+        - name: app.kalenderui-auth-key

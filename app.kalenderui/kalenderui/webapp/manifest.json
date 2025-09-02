@@ -1,0 +1,140 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "kalenderui",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap-ux/fiori-freestyle-writer:basic",
+      "version": "0.21.10"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "webapp",
+          "action": "display",
+          "title": "kalender",
+          "icon": "sap-icon://add"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.136.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "kalenderui.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "kalenderService",
+        "settings": {
+          "odataVersion": "4.0",
+          "useBatch": false,
+          "synchronizationMode": "None"
+        },
+        "type": "sap.ui.model.odata.v4.ODataModel"
+      }
+    },
+    "dataSources": {
+      "kalenderService": {
+        "uri": "/odata/v4/kalender/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+"routing": {
+  "config": {
+    "routerClass": "sap.m.routing.Router",
+    "viewType": "XML",
+    "async": true,
+    "viewPath": "kalenderui.view",
+    "controlAggregation": "pages",
+    "controlId": "app",
+    "clearControlAggregation": false
+  },
+  "routes": [
+    {
+      "name": "login",
+      "pattern": "",
+      "target": "login"
+    },
+    {
+      "name": "calender",
+      "pattern": "calender",
+      "target": "calender"
+    }
+  ],
+  "targets": {
+    "login": {
+      "viewType": "XML",
+      "viewName": "Login",
+      "viewId": "Login"
+    },
+    "calender": {
+      "viewType": "XML",
+      "viewName": "Calender",
+      "viewId": "Calender"
+    }
+  }
+},
+    "rootView": {
+      "viewName": "kalenderui.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "basic.service"
+  }
+}

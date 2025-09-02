@@ -1,0 +1,24 @@
+{
+    "name": "app.kalenderui",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "mbt build --mtar app.kalenderui.mtar",
+        "build:workspaces": "npm run build --workspaces --if-present",
+        "deploy": "cf deploy mta_archives/app.kalenderui.mtar --retries 0",
+        "lint": "npm run lint --workspaces --if-present",
+        "ui5lint": "npm run ui5lint --workspaces --if-present",
+        "start:kalenderui": "npm start --workspace kalenderui",
+        "qunit": "fiori run --open test/unitTests.qunit.html",
+        "opa5": "fiori run --open test/opaTests.qunit.html",
+        "start": "ui5 serve"
+    },
+    "dependencies": {
+        "mbt": "^1"
+    },
+    "workspaces": [
+        "kalenderui"
+    ],
+    "devDependencies": {
+        "ui5-middleware-simpleproxy": "^3.4.3"
+    }
+}
