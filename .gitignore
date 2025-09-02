@@ -6,7 +6,8 @@ connection.properties
 default-*.json
 .cdsrc-private.json
 gen/
-node_modules/
+app.kalenderui/node_modules/
+database/kalenderdb/node_modules/
 target/
 
 # Web IDE, App Studio
